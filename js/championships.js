@@ -33,21 +33,27 @@ function listenForUserSubmit(){
 
 function introduceNewChampionship(e){
   e.preventDefault();
-  const NAME = e.target.name.value;
-  const LOCATION = e.target.location.value;
+  const NAME = e.target.name.value.trim(); // Evita espacios adicionales al principio o al final.
+  const LOCATION = e.target.location.value.trim(); // Evita espacios adicionales al principio o al final.
 
-  championships.push({
-    name: NAME,
-    location: LOCATION
-  });
+  // Verifica que ambos campos no estén vacíos, siempre y cuando eliminemos 
+  // el atributo required de los campos name y location (index.html).
+  if (NAME && LOCATION) { 
+    championships.push({
+      name: NAME,
+      location: LOCATION
+    });
+    // Limpia los campos del formulario.
+    e.target.reset();
+  } else {
+    alert("Por favor, completa ambos campos antes de enviar."); 
+  }
 }
 
 function introduceNewChampionshipAndShowAllChampionships(e){
   introduceNewChampionship(e);
   showChampionshipList();
 }
-
-
 
 showChampionshipList();
 listenForUserSubmit();
